@@ -1,0 +1,14 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Photo",
+  "type": "object",
+  "required": ["albumId", "id", "title", "url", "thumbnailUrl"],
+  "properties": {
+    "albumId":      { "type": "integer", "minimum": 1 },
+    "id":           { "type": "integer", "minimum": 1 },
+    "title":        { "type": "string",  "minLength": 1 },
+    "url":          { "type": "string",  "minLength": 1 },
+    "thumbnailUrl": { "type": "string",  "minLength": 1 }
+  },
+  "additionalProperties": false
+}
