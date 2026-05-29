@@ -9,6 +9,8 @@ import io.restassured.http.ContentType;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.concurrent.TimeUnit;
+
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.*;
 
@@ -19,7 +21,7 @@ public class PostRequestTest extends BaseTest {
     @Test
     @DisplayName("POST /posts creates a new post and returns 201")
     @Severity(SeverityLevel.CRITICAL)
-    @Description("Verifies that a POST request returns 201 and echoes back the submitted payload with an assigned ID")
+    @Description("Verifies 201 status, echoed payload fields, assigned id=101, and Content-Type header")
     void createPostReturns201() {
         String requestBody = """
                 {
@@ -37,6 +39,7 @@ public class PostRequestTest extends BaseTest {
             .then()
                 .statusCode(201)
                 .contentType(containsString("application/json"))
+                .header("Content-Type", containsString("application/json"))
                 .body("title", equalTo("Test Post"))
                 .body("body", equalTo("This is a test post body"))
                 .body("userId", equalTo(1))
@@ -44,9 +47,9 @@ public class PostRequestTest extends BaseTest {
     }
 
     @Test
-    @DisplayName("POST /posts returns 201 with partial payload")
+    @DisplayName("POST /posts with partial payload still returns 201 with an ID")
     @Severity(SeverityLevel.NORMAL)
-    @Description("Verifies that the API accepts a minimal payload and still returns 201 with an ID")
+    @Description("Verifies the API accepts a minimal payload and still assigns an id in the response")
     void createPostWithPartialPayload() {
         String requestBody = """
                 {
@@ -66,15 +69,30 @@ public class PostRequestTest extends BaseTest {
     }
 
     @Test
-    @DisplayName("POST /posts response contains Content-Type application/json")
+    @DisplayName("POST /posts with empty body returns 201 with an ID")
     @Severity(SeverityLevel.NORMAL)
-    @Description("Verifies that the POST response header includes the correct Content-Type")
-    void createPostHasCorrectContentType() {
+    @Description("Verifies the API handles an empty JSON object and still returns 201 with a simulated id")
+    void createPostWithEmptyBodyReturns201() {
+        given()
+            .contentType(ContentType.JSON)
+            .body("{}")
+            .when()
+                .post("/posts")
+            .then()
+                .statusCode(201)
+                .body("id", notNullValue());
+    }
+
+    @Test
+    @DisplayName("POST /posts responds within 3 seconds")
+    @Severity(SeverityLevel.NORMAL)
+    @Description("Verifies that the POST endpoint meets a 3-second response time threshold")
+    void createPostResponseTimeIsAcceptable() {
         String requestBody = """
                 {
-                    "title": "Header Check Post",
-                    "body": "Checking headers",
-                    "userId": 2
+                    "title": "Performance Test Post",
+                    "body": "Checking response time",
+                    "userId": 1
                 }
                 """;
 
@@ -85,6 +103,6 @@ public class PostRequestTest extends BaseTest {
                 .post("/posts")
             .then()
                 .statusCode(201)
-                .header("Content-Type", containsString("application/json"));
+                .time(lessThan(3000L), TimeUnit.MILLISECONDS);
     }
 }
