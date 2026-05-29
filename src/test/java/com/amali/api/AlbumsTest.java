@@ -3,8 +3,10 @@ package com.amali.api;
 import io.qameta.allure.Description;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Feature;
+import io.qameta.allure.Owner;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
+import io.qameta.allure.Story;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -16,9 +18,11 @@ import static org.hamcrest.Matchers.*;
 
 @Epic("JSONPlaceholder API Tests")
 @Feature("Albums")
+@Owner("Nelly")
 public class AlbumsTest extends BaseTest {
 
     @Test
+    @Story("List All Albums")
     @DisplayName("GET /albums returns 200 with exactly 100 albums")
     @Severity(SeverityLevel.CRITICAL)
     @Description("Verifies the full album dataset is returned with the correct count of 100 items")
@@ -35,6 +39,7 @@ public class AlbumsTest extends BaseTest {
     }
 
     @Test
+    @Story("Get Single Album")
     @DisplayName("GET /albums/1 returns correct album, passes schema, responds within 3s")
     @Severity(SeverityLevel.CRITICAL)
     @Description("Verifies all album fields, JSON schema validation, and response time")
@@ -53,6 +58,7 @@ public class AlbumsTest extends BaseTest {
     }
 
     @Test
+    @Story("Error Handling")
     @DisplayName("GET /albums/101 returns 404 — first ID over boundary")
     @Severity(SeverityLevel.NORMAL)
     @Description("Verifies that ID 101, one above the last seeded album, returns HTTP 404")
@@ -65,6 +71,7 @@ public class AlbumsTest extends BaseTest {
     }
 
     @Test
+    @Story("Query Filtering")
     @DisplayName("GET /albums?userId=1 returns exactly 10 albums all owned by user 1")
     @Severity(SeverityLevel.NORMAL)
     @Description("Verifies userId filter returns exactly 10 albums and every item belongs to user 1")

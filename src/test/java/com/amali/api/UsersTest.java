@@ -3,8 +3,10 @@ package com.amali.api;
 import io.qameta.allure.Description;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Feature;
+import io.qameta.allure.Owner;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
+import io.qameta.allure.Story;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -16,9 +18,11 @@ import static org.hamcrest.Matchers.*;
 
 @Epic("JSONPlaceholder API Tests")
 @Feature("Users")
+@Owner("Nelly")
 public class UsersTest extends BaseTest {
 
     @Test
+    @Story("List All Users")
     @DisplayName("GET /users returns 200 with exactly 10 users")
     @Severity(SeverityLevel.CRITICAL)
     @Description("Verifies the full user dataset is returned with correct count and non-empty fields on the first item")
@@ -37,6 +41,7 @@ public class UsersTest extends BaseTest {
     }
 
     @Test
+    @Story("Get Single User")
     @DisplayName("GET /users/1 returns correct user with nested address and company, passes schema")
     @Severity(SeverityLevel.CRITICAL)
     @Description("Verifies all top-level and nested fields (address, geo, company) and JSON schema validation")
@@ -59,6 +64,7 @@ public class UsersTest extends BaseTest {
     }
 
     @Test
+    @Story("Boundary Validation")
     @DisplayName("GET /users/10 returns 200 — upper boundary valid ID")
     @Severity(SeverityLevel.NORMAL)
     @Description("Verifies the last seeded user (id=10) returns HTTP 200")
@@ -72,6 +78,7 @@ public class UsersTest extends BaseTest {
     }
 
     @Test
+    @Story("Error Handling")
     @DisplayName("GET /users/11 returns 404 — first ID over boundary")
     @Severity(SeverityLevel.NORMAL)
     @Description("Verifies that ID 11, one above the last seeded user, returns HTTP 404")
@@ -84,6 +91,7 @@ public class UsersTest extends BaseTest {
     }
 
     @Test
+    @Story("Query Filtering")
     @DisplayName("GET /users?username=Bret returns exactly 1 matching user")
     @Severity(SeverityLevel.NORMAL)
     @Description("Verifies that filtering by username returns one result with the correct username value")

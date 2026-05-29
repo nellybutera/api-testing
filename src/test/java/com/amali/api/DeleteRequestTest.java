@@ -3,8 +3,10 @@ package com.amali.api;
 import io.qameta.allure.Description;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Feature;
+import io.qameta.allure.Owner;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
+import io.qameta.allure.Story;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -15,9 +17,11 @@ import static org.hamcrest.Matchers.*;
 
 @Epic("JSONPlaceholder API Tests")
 @Feature("DELETE Requests")
+@Owner("Nelly")
 public class DeleteRequestTest extends BaseTest {
 
     @Test
+    @Story("Delete Post")
     @DisplayName("DELETE /posts/1 returns 200 with empty JSON body and correct headers")
     @Severity(SeverityLevel.CRITICAL)
     @Description("Verifies 200 status, empty JSON object body, Content-Type header, and response time on delete")
@@ -34,6 +38,7 @@ public class DeleteRequestTest extends BaseTest {
     }
 
     @Test
+    @Story("Boundary Validation")
     @DisplayName("DELETE /posts/100 returns 200 — upper boundary post")
     @Severity(SeverityLevel.NORMAL)
     @Description("Verifies that deleting the last seeded post (id=100) returns 200 with an empty body")
@@ -47,6 +52,7 @@ public class DeleteRequestTest extends BaseTest {
     }
 
     @Test
+    @Story("Security Headers")
     @DisplayName("DELETE /posts/1 response includes CORS header")
     @Severity(SeverityLevel.NORMAL)
     @Description("Verifies that the DELETE response carries the Access-Control-Allow-Credentials header")

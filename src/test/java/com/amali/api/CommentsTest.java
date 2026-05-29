@@ -3,8 +3,10 @@ package com.amali.api;
 import io.qameta.allure.Description;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Feature;
+import io.qameta.allure.Owner;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
+import io.qameta.allure.Story;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -16,9 +18,11 @@ import static org.hamcrest.Matchers.*;
 
 @Epic("JSONPlaceholder API Tests")
 @Feature("Comments")
+@Owner("Nelly")
 public class CommentsTest extends BaseTest {
 
     @Test
+    @Story("List All Comments")
     @DisplayName("GET /comments returns 200 with exactly 500 comments")
     @Severity(SeverityLevel.CRITICAL)
     @Description("Verifies the full comment dataset is returned with the correct count of 500 items")
@@ -35,6 +39,7 @@ public class CommentsTest extends BaseTest {
     }
 
     @Test
+    @Story("Get Single Comment")
     @DisplayName("GET /comments/1 returns correct comment with valid email, passes schema")
     @Severity(SeverityLevel.CRITICAL)
     @Description("Verifies all comment fields, that email contains @, JSON schema, and response time")
@@ -55,6 +60,7 @@ public class CommentsTest extends BaseTest {
     }
 
     @Test
+    @Story("Error Handling")
     @DisplayName("GET /comments/501 returns 404 — first ID over boundary")
     @Severity(SeverityLevel.NORMAL)
     @Description("Verifies that ID 501, one above the last seeded comment, returns HTTP 404")
@@ -67,6 +73,7 @@ public class CommentsTest extends BaseTest {
     }
 
     @Test
+    @Story("Query Filtering")
     @DisplayName("GET /comments?postId=1 returns exactly 5 comments all belonging to post 1")
     @Severity(SeverityLevel.NORMAL)
     @Description("Verifies postId filter returns exactly 5 comments and every item has postId=1")

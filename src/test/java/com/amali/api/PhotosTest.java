@@ -3,8 +3,10 @@ package com.amali.api;
 import io.qameta.allure.Description;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Feature;
+import io.qameta.allure.Owner;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
+import io.qameta.allure.Story;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -16,9 +18,11 @@ import static org.hamcrest.Matchers.*;
 
 @Epic("JSONPlaceholder API Tests")
 @Feature("Photos")
+@Owner("Nelly")
 public class PhotosTest extends BaseTest {
 
     @Test
+    @Story("List All Photos")
     @DisplayName("GET /photos returns 200 with exactly 5000 photos")
     @Severity(SeverityLevel.CRITICAL)
     @Description("Verifies the full photo dataset is returned with the correct count of 5000 items")
@@ -36,6 +40,7 @@ public class PhotosTest extends BaseTest {
     }
 
     @Test
+    @Story("Get Single Photo")
     @DisplayName("GET /photos/1 returns correct photo with url and thumbnailUrl, passes schema")
     @Severity(SeverityLevel.CRITICAL)
     @Description("Verifies all photo fields including both URL fields, JSON schema, and response time")
@@ -56,6 +61,7 @@ public class PhotosTest extends BaseTest {
     }
 
     @Test
+    @Story("Error Handling")
     @DisplayName("GET /photos/5001 returns 404 — first ID over boundary")
     @Severity(SeverityLevel.NORMAL)
     @Description("Verifies that ID 5001, one above the last seeded photo, returns HTTP 404")
@@ -68,6 +74,7 @@ public class PhotosTest extends BaseTest {
     }
 
     @Test
+    @Story("Query Filtering")
     @DisplayName("GET /photos?albumId=1 returns exactly 50 photos all belonging to album 1")
     @Severity(SeverityLevel.NORMAL)
     @Description("Verifies albumId filter returns exactly 50 photos and every item has albumId=1")

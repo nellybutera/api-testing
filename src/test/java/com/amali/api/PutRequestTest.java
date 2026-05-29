@@ -3,8 +3,10 @@ package com.amali.api;
 import io.qameta.allure.Description;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Feature;
+import io.qameta.allure.Owner;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
+import io.qameta.allure.Story;
 import io.restassured.http.ContentType;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -16,9 +18,11 @@ import static org.hamcrest.Matchers.*;
 
 @Epic("JSONPlaceholder API Tests")
 @Feature("PUT Requests")
+@Owner("Nelly")
 public class PutRequestTest extends BaseTest {
 
     @Test
+    @Story("Update Post")
     @DisplayName("PUT /posts/1 updates a post, echoes payload, returns 200 with correct headers")
     @Severity(SeverityLevel.CRITICAL)
     @Description("Verifies 200 status, full echoed payload, Content-Type header, and response time on a full update")
@@ -49,6 +53,7 @@ public class PutRequestTest extends BaseTest {
     }
 
     @Test
+    @Story("Partial Update")
     @DisplayName("PATCH /posts/1 updates only the supplied field, preserves others")
     @Severity(SeverityLevel.NORMAL)
     @Description("Verifies that PATCH merges the supplied title while keeping the original id and body fields intact")
@@ -72,6 +77,7 @@ public class PutRequestTest extends BaseTest {
     }
 
     @Test
+    @Story("Edge Cases")
     @DisplayName("PUT /posts/1 with mismatched ID in body still uses path ID")
     @Severity(SeverityLevel.NORMAL)
     @Description("Verifies that the path parameter ID takes precedence and the response id matches the path, not the body")
